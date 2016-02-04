@@ -27,8 +27,10 @@ class MegaCLI(Plugin, RedHatPlugin):
     plugin_name = 'megacli'
     profiles = ('system', 'storage', 'hardware')
 
+    megacli_bin = '/opt/MegaRAID/MegaCli/MegaCli64'
+
     def setup(self):
-        if os.path.isfile("/opt/MegaRAID/MegaCli/MegaCli64"):
+        if os.path.isfile(self.megacli_bin):
             self.add_custom_text("LSI MegaCLI is installed.<br>")
             self.get_megacli_files()
 
@@ -37,10 +39,10 @@ class MegaCLI(Plugin, RedHatPlugin):
         """
 
         self.add_cmd_output([
-            "MegaCli64 LDPDInfo -aALL",
-            "MegaCli64 -AdpAllInfo -aALL",
-            "MegaCli64 -AdpBbuCmd -GetBbuStatus -aALL",
-            "MegaCli64 -ShowSummary -a0"
+            "{0} LDPDInfo -aALL".format(self.megacli_bin),
+            "{0} -AdpAllInfo -aALL".format(self.megacli_bin),
+            "{0} -AdpBbuCmd -GetBbuStatus -aALL".format(self.megacli_bin),
+            "{0} -ShowSummary -aALL".format(self.megacli_bin)
         ])
 
 # vim: set et ts=4 sw=4 :
